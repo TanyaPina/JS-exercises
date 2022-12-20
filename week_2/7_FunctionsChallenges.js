@@ -43,10 +43,10 @@ output: true if character (2nd string) is in the word of the first string, or fa
 
 */
 function stringIncludes(str1, str2) {  
-let configuredStr1 = str1.toLowerCase();
-let configuredStr2 = str2.toLowerCase();
+let configuredStr1 = str1.toLowerCase(); //makes our first string all lowercase 
+let configuredStr2 = str2.toLowerCase();  //makes our second string all lowercase 
 let stringCheck = configuredStr1.split(""); //will make an array of our first string and store it in a variable
-if (stringCheck.indexOf(configuredStr2) > -1) {
+if (stringCheck.indexOf(configuredStr2) > -1) {  //will compare the indexOf value, if over -1 it is present, if -1 it is not
     return true;
 } else {
     return false;
@@ -72,20 +72,21 @@ function : stringLastIndexOf
 input: two strings - 1st is a word, 2nd is a character
 output: last index of where str2 character appears in str1. If it is not present it should return -1 
 - cannot use .lastIndexOf() method
+- need to find the last instance of character, can loop backwards with for loop to find it
 
-
-function stringLastIndexOf(str1, str2){
-for (let i = str1.length - 1; i >= 0; i-- ) {
-    if (str1(i) == str2) {
-      return i;  
-    }
-    return -1;
-}
+*/
+function stringLastIndexOf(str, char) {
+for (let i = str.length - 1; i > 0; i-- ) {  //will loop backwards through out string 
+    if (char == str[i]) {  //will compare the part of the string that we are looping through to the character parameter
+    return i;  //will return the index if the character is found
+    }  
+} 
+return -1;  //if character is not found it will return -1
 }
 
 console.log(stringLastIndexOf('awesome', 'e'));
 console.log(stringLastIndexOf('awesome', 'z'));
-*/
+
 // Examples:
 // stringLastIndexOf('awesome', 'e'); // --> 6
 // stringLastIndexOf('awesome', 'z'); // --> -1
@@ -125,6 +126,31 @@ console.log(removeFromString("Hello School", 6, 400));
 // Exercise 5. Write a function called indexOf, which accepts an array and a number.
 // The function should return the first index at which the value exists or -1 if the value is not found.
 // IMPORTANT: Do not use the built in array.indexOf() function!
+
+/*
+pseudocode:
+functon: indexOf
+input: 2 - 1 array, 1 number
+output: return the first index at which value exists or -1 if it does not
+- cannot use array.indexOf() method
+- arrays can be looped through to see what values lie at each index
+- can compare those values to the number and return the index
+*/
+
+function indexOf (arr, num) {
+for (let i = 0; i < arr.length; i++){  //loops through the array 
+    if (num === arr[i]){ // compares number to the value that is being looped through at the current index
+        return i; //returns index number if it matches
+    }
+} return -1;  //if it does not match it will return -1
+}
+
+let arr = [5, 10, 15, 20];
+console.log(indexOf(arr, 20)); // --> 3
+let arr2 = [1, 2, 3, 4, 5];
+console.log(indexOf(arr2, 2)); // --> 1
+let arr3 = [1, 2];
+console.log(indexOf(arr3, 100)); // --> -1
 // Examples:
 // let arr = [5, 10, 15, 20];
 // indexOf(arr, 20); // --> 3
@@ -135,6 +161,47 @@ console.log(removeFromString("Hello School", 6, 400));
 
 // Exercise 6. Write a function called includes which accepts a collection, a value, and an optional starting index. The function should return true if the value exists in the collection when we search starting from the starting index. Otherwise, it should return false.
 // The collection can be a string, an array, or an object. If the collection is a string or array, the third parameter is a starting index for where to search from. If the collection is an object, the function searches for the value among values in the object; since objects have no sort order, the third parameter is ignored.
+/*
+pseudocode:
+function: includes
+input: 1 collection, 1 value, 1 optional starting index
+output: true if value is in the collection and when starting from the starting index
+        false if otherwise
+- cannot use .includes() method since it does not work for objects (only strings and arrays)
+- can use type of and Array.isArray to determine if parameter 1 is a string or an array
+- if it is a string or array, we can loop through it and compare it to our second parameter to see if it is present
+- if parameter 1 is an object, we can access items in an object and compare it to our second parameter to see if it is present
+*/
+
+function includes(par1, par2, par3 = 0 ) {  //default index would be 0
+let par1Type = typeof par1; //checks to see if parameter 1 is a string or an object (object here includes arrays and objects)
+let isArr = Array.isArray(par1); //checks to see if parameter 1 is specifically an array object (as opposed to simply an object)
+if (par1Type === "string" || isArr) { //sets a loop for if parameter 1 is a string or an array
+    for (let i = par3; i < par1.length; i++) { //carries out the loop
+        if (par1[i] === par2) {  //compares the value at the certain index to the second parameter value
+            return true;  //if it matches, it will return true
+        }
+    }
+} 
+else if (par1Type === "object") { //if it does not match and the parameter is an object then we will execute another loop
+    for (let item in par1) {  //loops through the items in an object
+        if (par1[item] === par2) {  //compares the items in an onject at a certain index to the second parameter value 
+            return true;  //if it matches, it will return true
+        }
+    }
+}
+return false; //if nothing has matched so far, the function will return false
+}
+
+console.log(includes([1, 2, 3], 1)); // --> true
+console.log(includes([1, 2, 3], 1, 2)); // --> false
+console.log(includes([1, 2, 3], 6)); // --> false
+console.log(includes({ 'a': 1, 'b': 2 }, 1)) // --> true
+console.log(includes({ 'a': 1, 'b': 2 }, 'a')); // --> false
+console.log(includes('abcd', 'b')); // --> true
+console.log(includes('abcd', 'e')); // --> false
+console.log(includes('abcd', 'a', 2)); // --> false
+
 // Examples:
 // includes([1, 2, 3], 1) // --> true
 // includes([1, 2, 3], 1, 2) // --> false
