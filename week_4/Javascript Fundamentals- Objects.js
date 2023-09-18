@@ -74,3 +74,5 @@ function multiplyNumeric(obj) {
 }
 }
 console.log(multiplyNumeric(menu));
+
+//Github is a website that displays the git history.
